@@ -20,6 +20,7 @@
   --line-strong: rgba(255, 255, 255, 0.16);
   --red: #f3373c;
   --red-dark: #bd2028;
+  --red-text: #ff4b50;
   --button-red: #d92830;
   --button-red-hover: #c9232b;
   --green: #84b98d;
@@ -166,10 +167,6 @@ button:focus-visible, a:focus-visible, select:focus-visible {
 .poster-bottomline { margin-top: 9px; color: rgba(255,255,255,.55); font-size: 6px; font-weight: 800; letter-spacing: .16em; }
 .hero-poster { aspect-ratio: 2 / 3; width: 100%; border-radius: 12px; }
 .hero-poster .poster-copy strong { font-size: 25px; }
-.hero-poster-caption { position: absolute; right: -46px; bottom: 24px; left: -33px; z-index: 3; display: flex; flex-direction: column; gap: 3px; padding: 10px 14px; border: 1px solid rgba(255,255,255,.14); border-radius: 6px; background: rgba(9,10,12,.8); transform: rotate(-4deg); }
-.hero-poster-caption span { color: #d1ccc8; font-size: 7px; font-weight: 800; letter-spacing: .17em; }
-.hero-poster-caption span i { color: var(--red); font-style: normal; }
-.hero-poster-caption strong { font-size: 14px; font-weight: 800; }
 .hero-slider-controls { position: absolute; right: 43px; bottom: 53px; z-index: 3; display: flex; align-items: center; gap: 8px; }
 .hero-slide-count { margin-right: 8px; color: #e5dfdb; font-size: 12px; font-weight: 800; letter-spacing: .1em; }
 .hero-slide-count i { margin: 0 3px; color: #96918d; font-style: normal; }
@@ -275,7 +272,7 @@ button:focus-visible, a:focus-visible, select:focus-visible {
 .is-soon .format-chip { background: rgba(243,55,60,.18); color: #ffb4b6; }
 .soon-label { position: absolute; top: -7px; right: 8px; z-index: 2; padding: 2px 6px; border: 1px solid rgba(243,55,60,.58); border-radius: 4px; background: #551b20; color: #ffc1c2; font-size: 11px; font-weight: 800; letter-spacing: .03em; }
 .past-note { position: absolute; top: 2px; right: 4px; color: #96918d; font-size: 11px; }
-.schedule-empty { min-height: 98px; flex-direction: row; align-items: center; gap: 11px; border: 1px dashed rgba(255,255,255,.12); border-radius: 10px; background: rgba(255,255,255,.018); }
+.schedule-empty { display: flex; min-height: 98px; padding: 14px; flex-direction: row; align-items: center; gap: 11px; border: 1px dashed rgba(255,255,255,.12); border-radius: 10px; background: rgba(255,255,255,.018); }
 .empty-mark { display: grid; width: 31px; height: 31px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: rgba(255,255,255,.055); color: #9f9994; }
 .schedule-empty > div:last-child { display: flex; flex-direction: column; gap: 3px; }
 .schedule-empty strong { color: #c9c4bf; font-size: 12px; font-weight: 730; }
@@ -594,8 +591,6 @@ button:focus-visible, a:focus-visible, select:focus-visible {
   .hero-poster-wrap { top: 13px; right: calc(50% - 76px); width: 152px; }
   .hero-poster { border-radius: 9px; }
   .hero-poster .poster-copy strong { font-size: 19px; }
-  .hero-poster-caption { right: -27px; bottom: 20px; left: -19px; padding: 7px 10px; }
-  .hero-poster-caption strong { font-size: 12px; }
   .hero-slider-controls { right: 16px; bottom: 17px; gap: 5px; }
   .hero-slider-controls button { width: 29px; height: 29px; }
   .hero-slide-count { margin-right: 3px; font-size: 11px; }
@@ -816,3 +811,9 @@ button:focus-visible, a:focus-visible, select:focus-visible {
   .modal-close { top: 6px; right: 6px; width: 44px; height: 44px; }
   .location-tabs-mobile button { min-height: 44px; }
 }
+
+/* Hero banner shows the poster alone */
+.hero-poster .poster-topline, .hero-poster .poster-copy { display: none; }
+
+/* Cinema name above each film's sessions */
+.schedule-branch { margin: 0 0 14px; color: var(--red-text); font-size: 24px; font-weight: 850; letter-spacing: .03em; line-height: 1.1; text-transform: uppercase; }

@@ -387,15 +387,19 @@ function ScheduleColumn({ film, branch, day, onSessionClick, variant = '', forma
     ? sessions.filter((session) => !isPastSession(session, day)).sort((a, b) => a.time.localeCompare(b.time))[0]
     : null;
   const minPrice = sessions.length ? Math.min(...sessions.map((session) => session.price)) : null;
+  const heading = variant.includes('desktop-schedule') && <h4 className="schedule-branch">{branches[branch].name}</h4>;
 
   if (!sessions.length) {
     const formatIsFilteredOut = allSessions.length > 0;
     return (
-      <div className={`schedule-column schedule-empty ${variant}`}>
-        <div className="empty-mark"><Icon name="film" size={17} /></div>
-        <div>
-          <strong>{formatIsFilteredOut ? `Нет сеансов ${formatFilter.toUpperCase()}` : 'В этом кинотеатре не идёт'}</strong>
-          <span>{formatIsFilteredOut ? 'Смените фильтр формата, чтобы увидеть остальные сеансы' : 'На выбранную дату сеансов нет'}</span>
+      <div className={`schedule-column ${variant}`}>
+        {heading}
+        <div className="schedule-empty">
+          <div className="empty-mark"><Icon name="film" size={17} /></div>
+          <div>
+            <strong>{formatIsFilteredOut ? `Нет сеансов ${formatFilter.toUpperCase()}` : 'В этом кинотеатре не идёт'}</strong>
+            <span>{formatIsFilteredOut ? 'Смените фильтр формата, чтобы увидеть остальные сеансы' : 'На выбранную дату сеансов нет'}</span>
+          </div>
         </div>
       </div>
     );
@@ -403,6 +407,7 @@ function ScheduleColumn({ film, branch, day, onSessionClick, variant = '', forma
 
   return (
     <div className={`schedule-column ${variant}`}>
+      {heading}
       <div className="schedule-summary">
         <span>{sessions.length} {sessions.length === 1 ? 'сеанс' : sessions.length < 5 ? 'сеанса' : 'сеансов'}</span>
         <span>от {minPrice} ₽</span>
@@ -654,7 +659,6 @@ function App() {
               <div className="hero-back-card hero-back-card-two"><span>НА БОЛЬШОМ<br />ЭКРАНЕ</span></div>
               <div className="hero-poster-wrap">
                 <PosterArtwork film={heroFilm} className="hero-poster" onOpen={() => setDetailFilm(heroFilm)} />
-                <div className="hero-poster-caption"><strong>{heroFilm.title}</strong></div>
               </div>
               <div className="hero-slider-controls" aria-label="Премьеры недели">
                 <span className="hero-slide-count">0{heroIndex + 1} <i>/</i> 0{heroFilms.length}</span>
