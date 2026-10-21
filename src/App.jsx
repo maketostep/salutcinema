@@ -5,6 +5,13 @@ const phone = '+7 (8652) 33-00-00';
 const phoneHref = '+78652330000';
 
 const hasRating = (value) => value && value !== '—';
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`;
+
+const heroBanners = [
+  { id: 'night-of-horror', small: 'banners/banner-3-1200.webp', large: 'banners/banner-3-3200.webp', alt: 'Ночь ужасов, в ночь с 30 на 31 октября, начало в 22:30', mobileFocus: '0%' },
+  { id: 'resident-evil', small: 'banners/banner-2-1200.webp', large: 'banners/banner-2-3200.webp', alt: 'Обитель зла, в кино с 26 сентября', mobileFocus: '50%' },
+  { id: 'twilight', small: 'banners/banner-1-1200.webp', large: 'banners/banner-1-3200.webp', alt: 'Сумерки, с 17 сентября', mobileFocus: '48%' },
+];
 
 function makeShow(time, format, hall, price) {
   return { time, format, hall, price };
@@ -22,7 +29,7 @@ const films = [
     likes: 65,
     isNew: true,
     artwork: 'forest',
-    poster: '/posters/bitva-motorov.webp',
+    poster: '/posters/bitva-motorov.webp', realPoster: true,
     palette: ['#6b7650', '#182523'],
     tagline: 'Гонка, которая изменила историю',
     director: 'Илья Маланин',
@@ -59,7 +66,6 @@ const films = [
     isNew: true,
     artwork: 'orbit',
     poster: '/posters/bez-oglyadki.webp',
-    bannerFocus: '50% 52%',
     palette: ['#4e7391', '#15202f'],
     tagline: 'Иногда лучший план — уехать',
     director: 'Наталия Кончаловская',
@@ -160,7 +166,7 @@ const films = [
     likes: 37,
     isNew: true,
     artwork: 'sunset',
-    poster: '/posters/mamontenok.webp',
+    poster: '/posters/mamontenok.webp', realPoster: true,
     palette: ['#d7a86c', '#253d4a'],
     tagline: 'Маленький герой ищет самое важное',
     director: 'Александр Войтинский',
@@ -196,7 +202,7 @@ const films = [
     likes: 51,
     isNew: true,
     artwork: 'museum',
-    poster: '/posters/tsarevna-nesmeyana.webp',
+    poster: '/posters/tsarevna-nesmeyana.webp', realPoster: true,
     palette: ['#bd9b72', '#423554'],
     tagline: 'Сможешь рассмешить целое царство?',
     director: 'Василий Ровенский',
@@ -227,24 +233,24 @@ const comingSoon = [
   },
   {
     id: 'tsikl-zverya', title: 'Цикл зверя', genre: 'Ужасы · Триллер', age: '18+', release: 'С 22 октября',
-    artwork: 'forest', poster: '/posters/tsikl-zverya.webp', palette: ['#526b79', '#17232a'], tagline: 'Прошлое не остаётся погребённым',
+    artwork: 'forest', poster: '/posters/tsikl-zverya.webp', realPoster: true, palette: ['#526b79', '#17232a'], tagline: 'Прошлое не остаётся погребённым',
   },
   {
     id: 'morozko', title: 'Морозко', genre: 'Семейное · Фэнтези', age: '6+', release: 'С 22 октября',
-    artwork: 'orbit', poster: '/posters/morozko.webp', palette: ['#748ca3', '#263148'], tagline: 'Новая зимняя сказка',
+    artwork: 'orbit', poster: '/posters/morozko.webp', realPoster: true, palette: ['#748ca3', '#263148'], tagline: 'Новая зимняя сказка',
   },
 ];
 
 const branches = {
   center: {
-    name: 'Салют Центр', short: 'Центр',
+    name: 'Салют Центр', short: 'Центр', logo: 'brand/salut-centr.svg', mallLogo: 'brand/evropeyski.svg', street: 'Карла Маркса 53',
     address: 'ТРЦ «Европейский», ул. Карла Маркса, 53',
     mapAddress: 'Ставрополь, ТРЦ Европейский, проспект Карла Маркса 53',
     halls: '7 залов', hours: 'Ежедневно · 10:00–02:00', phone: phone,
     note: 'Премьерный зал с экраном 20 метров и два VIP-зала.',
   },
   south: {
-    name: 'Салют Юг', short: 'Юг',
+    name: 'Салют Юг', short: 'Юг', logo: 'brand/salut-yug.svg', street: 'ул. 50 лет ВЛКСМ 1',
     address: 'ул. 50 лет ВЛКСМ, 1',
     mapAddress: 'Ставрополь, улица 50 лет ВЛКСМ 1',
     halls: '5 залов', hours: 'Ежедневно · 09:30–02:00', phone: phone,
@@ -325,7 +331,7 @@ function PosterArtwork({ film, className = '', onOpen, badge = true }) {
   return (
     <button
       type="button"
-      className={`poster-artwork ${film.poster ? 'has-poster' : ''} art-${film.artwork || 'forest'} ${className}`}
+      className={`poster-artwork ${film.poster ? 'has-poster' : ''} ${film.realPoster ? 'poster-clean' : ''} art-${film.artwork || 'forest'} ${className}`}
       style={style}
       onClick={onOpen}
       aria-label={`Подробнее о фильме «${film.title}»`}
@@ -346,6 +352,7 @@ function PosterArtwork({ film, className = '', onOpen, badge = true }) {
 function FilmInfo({ film, liked, onLike, compact = false }) {
   return (
     <div className={`film-info ${compact ? 'film-info-compact' : ''}`}>
+      {film.isNew && <span className="film-new">НОВИНКА</span>}
       <div className="film-title-line">
         <h3>{film.title}</h3>
         <span className="film-age-inline">{film.age}</span>
@@ -374,7 +381,7 @@ function FilmInfo({ film, liked, onLike, compact = false }) {
 function FilmCenter({ film, liked, onLike, onOpen }) {
   return (
     <div className="film-center">
-      <PosterArtwork film={film} className="main-poster" onOpen={onOpen} />
+      <PosterArtwork film={film} className="main-poster" onOpen={onOpen} badge={false} />
       <FilmInfo film={film} liked={liked} onLike={onLike} />
     </div>
   );
@@ -389,12 +396,23 @@ function ScheduleColumn({ film, branch, day, onSessionClick, variant = '', forma
     ? sessions.filter((session) => !isPastSession(session, day)).sort((a, b) => a.time.localeCompare(b.time))[0]
     : null;
   const minPrice = sessions.length ? Math.min(...sessions.map((session) => session.price)) : null;
-  const heading = variant.includes('desktop-schedule') && <h4 className="schedule-branch">{branches[branch].name}</h4>;
+  const place = branches[branch];
+  const collapsed = variant.includes('is-collapsed');
+  const hiddenProps = collapsed ? { 'aria-hidden': true, inert: '' } : {};
+  const heading = variant.includes('desktop-schedule') && (
+    <div className="schedule-branch">
+      <h4><img className="schedule-branch-logo" src={assetUrl(place.logo)} alt={place.name} /></h4>
+      <p className="schedule-branch-place">
+        {place.mallLogo && <img className="schedule-branch-mall" src={assetUrl(place.mallLogo)} alt="ТРЦ «Европейский»" />}
+        <span>{place.street}</span>
+      </p>
+    </div>
+  );
 
   if (!sessions.length) {
     const formatIsFilteredOut = allSessions.length > 0;
     return (
-      <div className={`schedule-column ${variant}`}>
+      <div className={`schedule-column ${variant}`} {...hiddenProps}>
         {heading}
         <div className="schedule-empty">
           <div className="empty-mark"><Icon name="film" size={17} /></div>
@@ -408,7 +426,7 @@ function ScheduleColumn({ film, branch, day, onSessionClick, variant = '', forma
   }
 
   return (
-    <div className={`schedule-column ${variant}`}>
+    <div className={`schedule-column ${variant}`} {...hiddenProps}>
       {heading}
       <div className="schedule-summary">
         <span>{sessions.length} {sessions.length === 1 ? 'сеанс' : sessions.length < 5 ? 'сеанса' : 'сеансов'}</span>
@@ -462,10 +480,15 @@ function Modal({ children, onClose, labelledBy, className = '' }) {
 }
 
 function LocationTabs({ value, onChange, mobile = false }) {
+  const tab = (branch) => (
+    <button type="button" role="tab" aria-selected={value === branch} aria-label={branches[branch].name} className={value === branch ? 'active' : ''} onClick={() => onChange(branch)}>
+      {mobile ? <img className="location-tab-logo" src={assetUrl(branches[branch].logo)} alt="" /> : branches[branch].short}
+    </button>
+  );
   return (
     <div className={`location-tabs ${mobile ? 'location-tabs-mobile' : ''}`} role="tablist" aria-label="Выберите кинотеатр">
-      <button type="button" role="tab" aria-selected={value === 'center'} className={value === 'center' ? 'active' : ''} onClick={() => onChange('center')}>Центр</button>
-      <button type="button" role="tab" aria-selected={value === 'south'} className={value === 'south' ? 'active' : ''} onClick={() => onChange('south')}>Юг</button>
+      {tab('center')}
+      {tab('south')}
     </div>
   );
 }
@@ -560,8 +583,6 @@ function App() {
     return () => window.clearTimeout(timeout);
   }, [toast]);
 
-  const heroFilms = useMemo(() => films.filter((film) => film.isNew).slice(0, 3), []);
-
   const visibleFilms = useMemo(() => films.filter((film) => {
     if (onlyNew && !film.isNew) return false;
     if (ageFilter !== 'all' && film.age !== ageFilter) return false;
@@ -598,12 +619,6 @@ function App() {
     document.getElementById('afisha')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const chooseHeroFilm = (film) => {
-    setMenuOpen(false);
-    const target = document.getElementById(`film-${film.id}`) || document.getElementById('afisha');
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   const clearFilters = () => {
     setFormatFilter('all');
     setAgeFilter('all');
@@ -617,8 +632,7 @@ function App() {
       <header className="site-header">
         <div className="header-inner">
           <a href="#top" className="brand" aria-label="Салют — на главную" onClick={() => setMenuOpen(false)}>
-            <span className="brand-word">САЛЮТ<span className="brand-dot">.</span></span>
-            <span className="brand-caption">КИНОТЕАТРЫ СТАВРОПОЛЯ</span>
+            <img className="brand-logo" src={assetUrl('brand/logo.png')} alt="Кинотеатр Салют" width="327" height="74" />
           </a>
           <nav className={`main-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Главная навигация">
             <a href="#afisha" onClick={() => setMenuOpen(false)}>Афиша</a>
@@ -637,10 +651,10 @@ function App() {
       </header>
 
       <main id="top">
-        <section className="hero-section page-container" aria-labelledby="hero-title">
+        <section className="hero-section" aria-labelledby="hero-title">
           <h1 id="hero-title" className="sr-only">Салют — кинотеатры Ставрополя: афиша и расписание</h1>
-          <HeroBanner films={heroFilms} onChoose={chooseHeroFilm} onDetails={setDetailFilm} />
-          <div className="hero-underbar">
+          <HeroBanner banners={heroBanners} onChoose={() => scrollToSchedule()} />
+          <div className="hero-underbar page-container">
             <span><Icon name="pin" size={16} /> Ставрополь</span>
             <span className="hero-underbar-divider" />
             <span>Два кинотеатра <b>—</b> одна афиша</span>
@@ -713,38 +727,14 @@ function App() {
             <LocationTabs value={mobileBranch} onChange={setMobileBranch} mobile />
           </div>
 
-          <div className={`sticky-location-labels labels-${locationView}`} aria-hidden="true">
-            {locationView === 'both' ? (
-              <>
-                <div className="location-label"><span className="label-mark">01</span><span><strong>САЛЮТ ЦЕНТР</strong><small>ТРЦ «Европейский» · Карла Маркса, 53</small></span><Icon name="pin" size={15} /></div>
-                <div className="film-label"><span className="label-mark">02</span><span><strong>ФИЛЬМ</strong><small>Постер и информация</small></span></div>
-                <div className="location-label right-label"><span className="label-mark">03</span><span><strong>САЛЮТ ЮГ</strong><small>50 лет ВЛКСМ, 1</small></span><Icon name="pin" size={15} /></div>
-              </>
-            ) : (
-              <>
-                <div className="film-label"><span className="label-mark">01</span><span><strong>ФИЛЬМ</strong><small>Постер и информация</small></span></div>
-                <div className="location-label single-label"><span className="label-mark">02</span><span><strong>{branches[locationView].name.toUpperCase()}</strong><small>{branches[locationView].address}</small></span><Icon name="pin" size={15} /></div>
-              </>
-            )}
-          </div>
-
           <div className="film-list">
             {visibleFilms.length ? visibleFilms.map((film) => (
               <article className={`screening-row mode-${locationView}`} key={film.id} id={`film-${film.id}`}>
-                {locationView === 'both' ? (
-                  <>
-                    <ScheduleColumn film={film} branch="center" day={selectedDay} onSessionClick={openBooking} variant="desktop-schedule center-schedule" formatFilter={formatFilter} />
-                    <FilmCenter film={film} liked={likedFilms.has(film.id)} onLike={() => onLike(film.id)} onOpen={() => setDetailFilm(film)} />
-                    <ScheduleColumn film={film} branch="south" day={selectedDay} onSessionClick={openBooking} variant="desktop-schedule south-schedule" formatFilter={formatFilter} />
-                  </>
-                ) : (
-                  <>
-                    <FilmCenter film={film} liked={likedFilms.has(film.id)} onLike={() => onLike(film.id)} onOpen={() => setDetailFilm(film)} />
-                    <ScheduleColumn film={film} branch={locationView} day={selectedDay} onSessionClick={openBooking} variant="desktop-schedule single-schedule" formatFilter={formatFilter} />
-                  </>
-                )}
+                <ScheduleColumn film={film} branch="center" day={selectedDay} onSessionClick={openBooking} variant={`desktop-schedule center-schedule ${locationView === 'south' ? 'is-collapsed' : ''}`} formatFilter={formatFilter} />
+                <FilmCenter film={film} liked={likedFilms.has(film.id)} onLike={() => onLike(film.id)} onOpen={() => setDetailFilm(film)} />
+                <ScheduleColumn film={film} branch="south" day={selectedDay} onSessionClick={openBooking} variant={`desktop-schedule south-schedule ${locationView === 'center' ? 'is-collapsed' : ''}`} formatFilter={formatFilter} />
                 <div className="mobile-film-main">
-                  <PosterArtwork film={film} className="mobile-poster" onOpen={() => setDetailFilm(film)} />
+                  <PosterArtwork film={film} className="mobile-poster" onOpen={() => setDetailFilm(film)} badge={false} />
                   <FilmInfo film={film} liked={likedFilms.has(film.id)} onLike={() => onLike(film.id)} compact />
                 </div>
                 <div className="mobile-row-schedule">
@@ -844,8 +834,7 @@ function App() {
         <div className="footer-main page-container">
           <div className="footer-brand-column">
             <a href="#top" className="brand footer-brand" aria-label="Салют — наверх">
-              <span className="brand-word">САЛЮТ<span className="brand-dot">.</span></span>
-              <span className="brand-caption">КИНОТЕАТРЫ СТАВРОПОЛЯ</span>
+              <img className="brand-logo" src={assetUrl('brand/logo.png')} alt="Кинотеатр Салют" width="327" height="74" />
             </a>
             <p>Встречаемся в кино.<br />Ставрополь, две точки, одна большая история.</p>
             <div className="social-links">
@@ -873,7 +862,6 @@ function App() {
         </div>
         <div className="footer-bottom page-container">
           <span>© 2026 Кинотеатры «Салют», Ставрополь</span>
-          <span>Сеансы и лайки — демо · постеры созданы ИИ, это не официальные афиши</span>
           <a href="#top">Наверх <Icon name="arrow" size={14} /></a>
         </div>
       </footer>

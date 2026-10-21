@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react';
 const AUTOPLAY_MS = 7000;
 const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 
-const mainTitle = (film) => film.title.split('. ')[0];
-const subtitle = (film) => film.title.split('. ').slice(1).join('. ');
-
 function Chevron({ direction }) {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -26,11 +23,11 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-export default function HeroBanner({ films, onChoose, onDetails }) {
+export default function HeroBanner({ banners, onChoose }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
-  const count = films.length;
+  const count = banners.length;
 
   useEffect(() => {
     if (paused || reducedMotion || count < 2) return undefined;
@@ -45,58 +42,48 @@ export default function HeroBanner({ films, onChoose, onDetails }) {
       className="banner"
       role="region"
       aria-roledescription="карусель"
-      aria-label="Премьеры недели"
+      aria-label="Афиша событий"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      {films.map((film, slide) => (
-        <article
-          key={film.id}
+      {banners.map((banner, slide) => (
+        <button
+          key={banner.id}
+          type="button"
           className={`banner-slide ${slide === index ? 'is-active' : ''}`}
           aria-hidden={slide !== index}
-          inert={slide === index ? undefined : ''}
-          style={{ '--tone-a': film.palette?.[0], '--tone-b': film.palette?.[1] }}
+          tabIndex={slide === index ? 0 : -1}
+          aria-label={`${banner.alt}. Смотреть расписание`}
+          onClick={onChoose}
         >
           <img
             className="banner-image"
-            src={assetUrl(film.banner || film.poster)}
+            src={assetUrl(banner.small)}
+            srcSet={`${assetUrl(banner.small)} 1200w, ${assetUrl(banner.large)} 3200w`}
+            sizes="100vw"
             alt=""
-            style={{ objectPosition: film.bannerFocus || '50% 30%' }}
+            style={{ '--mobile-focus': banner.mobileFocus }}
             loading={slide === 0 ? 'eager' : 'lazy'}
           />
-          <div className="banner-copy">
-            <div className="banner-badges">
-              {film.isNew && <span className="banner-new">НОВИНКА</span>}
-              <span className="banner-age">{film.age}</span>
-            </div>
-            <h2 className={`banner-title ${mainTitle(film).length > 14 ? 'is-long' : ''}`}>{mainTitle(film)}</h2>
-            {subtitle(film) && <p className="banner-subtitle">{subtitle(film)}</p>}
-            <p className="banner-tagline">{film.tagline}</p>
-            <p className="banner-meta">{film.genre} <i>·</i> {film.duration}</p>
-            <div className="banner-actions">
-              <button type="button" className="button-primary" onClick={() => onChoose(film)}>Выбрать сеанс</button>
-              <button type="button" className="button-banner-ghost" onClick={() => onDetails(film)}>О фильме</button>
-            </div>
-          </div>
-        </article>
+        </button>
       ))}
       <div className="banner-controls">
-        <button type="button" aria-label="Предыдущая премьера" onClick={() => go(-1)}><Chevron direction="left" /></button>
+        <button type="button" aria-label="Предыдущий баннер" onClick={() => go(-1)}><Chevron direction="left" /></button>
         <div className="banner-dots" role="group" aria-label="Выбор баннера">
-          {films.map((film, dot) => (
+          {banners.map((banner, dot) => (
             <button
-              key={film.id}
+              key={banner.id}
               type="button"
               className={dot === index ? 'is-active' : ''}
-              aria-label={`Баннер ${dot + 1}: ${film.title}`}
+              aria-label={`Баннер ${dot + 1}: ${banner.alt}`}
               aria-current={dot === index}
               onClick={() => setIndex(dot)}
             />
           ))}
         </div>
-        <button type="button" aria-label="Следующая премьера" onClick={() => go(1)}><Chevron direction="right" /></button>
+        <button type="button" aria-label="Следующий баннер" onClick={() => go(1)}><Chevron direction="right" /></button>
       </div>
     </div>
   );
