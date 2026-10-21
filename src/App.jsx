@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import HeroBanner from './HeroBanner.jsx';
 
 const phone = '+7 (8652) 33-00-00';
 const phoneHref = '+78652330000';
@@ -58,6 +59,7 @@ const films = [
     isNew: true,
     artwork: 'orbit',
     poster: '/posters/bez-oglyadki.webp',
+    bannerFocus: '50% 52%',
     palette: ['#4e7391', '#15202f'],
     tagline: 'Иногда лучший план — уехать',
     director: 'Наталия Кончаловская',
@@ -523,7 +525,6 @@ function App() {
   const [booking, setBooking] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
-  const [heroIndex, setHeroIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [toast, setToast] = useState('');
   const [isMobile, setIsMobile] = useState(false);
@@ -560,7 +561,6 @@ function App() {
   }, [toast]);
 
   const heroFilms = useMemo(() => films.filter((film) => film.isNew).slice(0, 3), []);
-  const heroFilm = heroFilms[heroIndex % heroFilms.length];
 
   const visibleFilms = useMemo(() => films.filter((film) => {
     if (onlyNew && !film.isNew) return false;
@@ -598,6 +598,12 @@ function App() {
     document.getElementById('afisha')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const chooseHeroFilm = (film) => {
+    setMenuOpen(false);
+    const target = document.getElementById(`film-${film.id}`) || document.getElementById('afisha');
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const clearFilters = () => {
     setFormatFilter('all');
     setAgeFilter('all');
@@ -632,42 +638,8 @@ function App() {
 
       <main id="top">
         <section className="hero-section page-container" aria-labelledby="hero-title">
-          <div className="hero-panel">
-            <div className="hero-glow" aria-hidden="true" />
-            <div className="hero-copy">
-              <div className="eyebrow"><span className="eyebrow-line" /> КИНО В СТАВРОПОЛЕ <span className="eyebrow-dot">·</span> {dates[0].full.toUpperCase()}</div>
-              <h1 id="hero-title">Истории,<br />которые <em>остаются.</em></h1>
-              <p className="hero-intro">Большие премьеры, удобные сеансы и два кинотеатра рядом. Выбирайте, где смотреть — остальное оставьте большому экрану.</p>
-              <div className="hero-feature">
-                <div className="hero-feature-icon"><Icon name="sparkle" size={19} /></div>
-                <div>
-                  <span>ПРЕМЬЕРА НЕДЕЛИ</span>
-                  <strong>{heroFilm.title}</strong>
-                  <small>{heroFilm.genre} <i>·</i> {heroFilm.age}</small>
-                </div>
-              </div>
-              <div className="hero-actions">
-                <button type="button" className="button-primary" onClick={() => scrollToSchedule()}>
-                  Выбрать сеанс <Icon name="arrow" size={17} />
-                </button>
-                <button type="button" className="button-quiet" onClick={() => setDetailFilm(heroFilm)}>О фильме</button>
-              </div>
-            </div>
-            <div className="hero-art-area">
-              <div className="hero-decoration-circle" aria-hidden="true" />
-              <div className="hero-back-card hero-back-card-one"><span>НОВАЯ<br />ИСТОРИЯ</span></div>
-              <div className="hero-back-card hero-back-card-two"><span>НА БОЛЬШОМ<br />ЭКРАНЕ</span></div>
-              <div className="hero-poster-wrap">
-                <PosterArtwork film={heroFilm} className="hero-poster" onOpen={() => setDetailFilm(heroFilm)} />
-              </div>
-              <div className="hero-slider-controls" aria-label="Премьеры недели">
-                <span className="hero-slide-count">0{heroIndex + 1} <i>/</i> 0{heroFilms.length}</span>
-                <button type="button" aria-label="Предыдущая премьера" onClick={() => setHeroIndex((index) => (index - 1 + heroFilms.length) % heroFilms.length)}><Icon name="left" size={17} /></button>
-                <button type="button" aria-label="Следующая премьера" onClick={() => setHeroIndex((index) => (index + 1) % heroFilms.length)}><Icon name="right" size={17} /></button>
-              </div>
-            </div>
-            <div className="hero-bottom-note"><span /> БЛИЖЕ, ЧЕМ КАЖЕТСЯ <b>·</b> САЛЮТ ЦЕНТР И САЛЮТ ЮГ</div>
-          </div>
+          <h1 id="hero-title" className="sr-only">Салют — кинотеатры Ставрополя: афиша и расписание</h1>
+          <HeroBanner films={heroFilms} onChoose={chooseHeroFilm} onDetails={setDetailFilm} />
           <div className="hero-underbar">
             <span><Icon name="pin" size={16} /> Ставрополь</span>
             <span className="hero-underbar-divider" />
