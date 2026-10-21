@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from 'react';
 const phone = '+7 (8652) 33-00-00';
 const phoneHref = '+78652330000';
 
+const hasRating = (value) => value && value !== '—';
+
 function makeShow(time, format, hall, price) {
   return { time, format, hall, price };
 }
@@ -349,7 +351,8 @@ function FilmInfo({ film, liked, onLike, compact = false }) {
       <p className="film-genre">{film.genre}</p>
       <div className="film-facts">
         <span><Icon name="clock" size={14} />{film.duration}</span>
-        <span className="rating-fact"><span className="rating-imdb">IMDb</span> {film.imdb}<i>·</i><span className="rating-kp">КП</span> {film.kinopoisk}</span>
+        {hasRating(film.imdb) && <span className="rating-fact"><span className="rating-imdb">IMDb</span> {film.imdb}</span>}
+        {hasRating(film.kinopoisk) && <span className="rating-fact"><span className="rating-kp">КП</span> {film.kinopoisk}</span>}
       </div>
       <button
         type="button"
@@ -905,10 +908,12 @@ function App() {
           <div className="detail-layout">
             <div className="detail-visual">
               <PosterArtwork film={detailFilm} className="detail-poster" onOpen={() => {}} />
-              <div className="detail-rating-grid">
-                <div><span>IMDb</span><strong>{detailFilm.imdb}</strong></div>
-                <div><span>КиноПоиск</span><strong>{detailFilm.kinopoisk}</strong></div>
-              </div>
+              {(hasRating(detailFilm.imdb) || hasRating(detailFilm.kinopoisk)) && (
+                <div className="detail-rating-grid">
+                  {hasRating(detailFilm.imdb) && <div><span>IMDb</span><strong>{detailFilm.imdb}</strong></div>}
+                  {hasRating(detailFilm.kinopoisk) && <div><span>КиноПоиск</span><strong>{detailFilm.kinopoisk}</strong></div>}
+                </div>
+              )}
             </div>
             <div className="detail-content">
               <div className="section-kicker"><span /> {detailFilm.isNew ? 'ПРЕМЬЕРА' : 'В ПРОКАТЕ'} <i>·</i> {detailFilm.age}</div>
