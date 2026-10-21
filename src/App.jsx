@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import HeroBanner from './HeroBanner.jsx';
+import { comingSoon, films } from './films.js';
 
 const phone = '+7 (8652) 33-00-00';
 const phoneHref = '+78652330000';
@@ -11,234 +12,6 @@ const heroBanners = [
   { id: 'night-of-horror', small: 'banners/banner-3-1200.webp', large: 'banners/banner-3-3200.webp', alt: 'Ночь ужасов, в ночь с 30 на 31 октября, начало в 22:30', mobileFocus: '0%' },
   { id: 'resident-evil', small: 'banners/banner-2-1200.webp', large: 'banners/banner-2-3200.webp', alt: 'Обитель зла, в кино с 26 сентября', mobileFocus: '50%' },
   { id: 'twilight', small: 'banners/banner-1-1200.webp', large: 'banners/banner-1-3200.webp', alt: 'Сумерки, с 17 сентября', mobileFocus: '48%' },
-];
-
-function makeShow(time, format, hall, price) {
-  return { time, format, hall, price };
-}
-
-const films = [
-  {
-    id: 'bitva-motorov',
-    title: 'Битва моторов',
-    genre: 'Приключения · Биография · Драма',
-    duration: '2 ч 23 мин',
-    age: '12+',
-    imdb: '—',
-    kinopoisk: '—',
-    likes: 65,
-    isNew: true,
-    artwork: 'forest',
-    poster: '/posters/bitva-motorov.webp', realPoster: true,
-    palette: ['#6b7650', '#182523'],
-    tagline: 'Гонка, которая изменила историю',
-    director: 'Илья Маланин',
-    cast: ['Иван Янковский', 'Юра Борисов', 'Паулина Андреева'],
-    synopsis: 'В начале XX века автогонщик и журналист Андрей Нагель мечтает вывести российский автомобиль на большую европейскую гонку. Вместе с инженером Дмитрием Бондаревым он готовит «Руссо-Балт» к испытанию, которое может изменить историю отечественного автоспорта.',
-    sessions: {
-      center: {
-        0: [makeShow('12:10', '2D', 3, 450), makeShow('16:40', '3D', 2, 520), makeShow('21:20', '2D', 5, 450)],
-        1: [makeShow('11:30', '2D', 4, 450), makeShow('18:15', '3D', 1, 520)],
-        2: [makeShow('13:00', '2D', 2, 450), makeShow('20:10', '2D', 6, 450)],
-        3: [makeShow('12:45', '3D', 1, 520), makeShow('17:30', '2D', 5, 450), makeShow('21:50', '2D', 3, 450)],
-        4: [makeShow('14:20', '2D', 3, 450)],
-        5: [makeShow('11:10', '2D', 2, 450), makeShow('19:35', '3D', 1, 520)],
-      },
-      south: {
-        0: [makeShow('13:30', '2D', 2, 430), makeShow('19:10', '2D', 4, 430)],
-        1: [makeShow('15:00', '3D', 1, 500)],
-        2: [makeShow('12:10', '2D', 5, 430), makeShow('18:40', '2D', 3, 430)],
-        3: [makeShow('14:00', '2D', 4, 430), makeShow('21:10', '3D', 1, 500)],
-        4: [makeShow('16:20', '2D', 2, 430)],
-        5: [makeShow('12:30', '2D', 3, 430)],
-      },
-    },
-  },
-  {
-    id: 'bez-oglyadki',
-    title: 'Без оглядки',
-    genre: 'Драма · Комедия · Приключения',
-    duration: '1 ч 21 мин',
-    age: '18+',
-    imdb: '—',
-    kinopoisk: '—',
-    likes: 42,
-    isNew: true,
-    artwork: 'orbit',
-    poster: '/posters/bez-oglyadki.webp',
-    palette: ['#4e7391', '#15202f'],
-    tagline: 'Иногда лучший план — уехать',
-    director: 'Наталия Кончаловская',
-    cast: ['Анна Пересильд', 'Дарья Алыпова', 'Олег Савостюк'],
-    synopsis: 'Соседки Женя и Соня решают, что случайно убили человека, и в панике отправляются в бега. Без денег, маршрута и опыта за рулём их поездка превращается в череду приключений — и попытку понять, от чего они на самом деле бегут.',
-    sessions: {
-      center: {
-        0: [makeShow('14:00', '2D', 6, 450), makeShow('20:30', '3D', 1, 520)],
-        1: [makeShow('12:20', '3D', 1, 520), makeShow('19:45', '2D', 4, 450)],
-        2: [makeShow('15:10', '2D', 5, 450)],
-        3: [makeShow('11:45', '2D', 3, 450), makeShow('18:20', '3D', 1, 520)],
-        4: [makeShow('13:35', '2D', 6, 450), makeShow('21:00', '2D', 2, 450)],
-        5: [makeShow('16:10', '3D', 1, 520)],
-      },
-      south: {
-        0: [makeShow('11:20', '2D', 3, 430), makeShow('15:50', '3D', 1, 500), makeShow('21:00', '2D', 5, 430)],
-        1: [makeShow('14:40', '2D', 2, 430)],
-        2: [makeShow('12:00', '3D', 1, 500), makeShow('19:20', '2D', 3, 430)],
-        3: [makeShow('16:15', '2D', 4, 430)],
-        4: [makeShow('12:40', '2D', 5, 430), makeShow('20:00', '3D', 1, 500)],
-        5: [makeShow('14:30', '2D', 3, 430), makeShow('18:10', '2D', 2, 430)],
-      },
-    },
-  },
-  {
-    id: 'arahnid',
-    title: 'Арахнид',
-    genre: 'Ужасы · Триллер',
-    duration: '1 ч 26 мин',
-    age: '18+',
-    imdb: '—',
-    kinopoisk: '—',
-    likes: 28,
-    isNew: false,
-    artwork: 'noir',
-    poster: '/posters/arahnid.webp',
-    palette: ['#a35b49', '#201519'],
-    tagline: 'В этом доме слишком много ног',
-    director: 'Анхель Гомес Эрнандес',
-    cast: ['Матильда Лутц', 'Грегг Салкин', 'Мелина Мэтьюз'],
-    synopsis: 'После поездки один из жильцов невольно приносит в многоквартирный дом опасный вид пауков. Дом закрывают на карантин, а соседям приходится бороться за выживание в замкнутом пространстве.',
-    sessions: {
-      center: {
-        0: [makeShow('22:15', '2D', 5, 450)],
-        1: [makeShow('21:30', '2D', 6, 450), makeShow('23:20', '2D', 4, 450)],
-        2: [makeShow('20:40', '2D', 5, 450)],
-        3: [makeShow('22:00', '2D', 3, 450)],
-        4: [makeShow('21:15', '2D', 6, 450)],
-        5: [makeShow('22:25', '2D', 5, 450)],
-      },
-      south: {
-        2: [makeShow('21:30', '2D', 3, 430)],
-        4: [makeShow('22:10', '2D', 4, 430)],
-      },
-    },
-  },
-  {
-    id: 'doktor-glas',
-    title: 'Доктор Глас',
-    genre: 'Триллер · Драма',
-    duration: '1 ч 51 мин',
-    age: '18+',
-    imdb: '7.3',
-    kinopoisk: '—',
-    likes: 83,
-    isNew: false,
-    artwork: 'noir',
-    poster: '/posters/doktor-glas.webp',
-    palette: ['#526b79', '#17232a'],
-    tagline: 'Спасти её — значит перейти черту',
-    director: 'Эрик Лейжонборг',
-    cast: ['Исак Кальмрот', 'Теа Софье Лок Несс', 'Кристиан Фанданго Сундгрен'],
-    synopsis: 'Одинокий врач Габриэль Глас встречает Хельгу, оказавшуюся в разрушительном браке. Попытка помочь ей затягивает доктора в опасную связь, где переплетаются ложь, желание и власть.',
-    sessions: {
-      center: {
-        1: [makeShow('10:50', '2D', 2, 350), makeShow('13:15', '2D', 4, 350)],
-        3: [makeShow('11:00', '2D', 2, 350)],
-        5: [makeShow('12:05', '2D', 4, 350), makeShow('15:25', '2D', 6, 350)],
-      },
-      south: {
-        0: [makeShow('10:40', '2D', 2, 330)],
-        1: [makeShow('12:00', '2D', 3, 330), makeShow('16:20', '2D', 5, 330)],
-        2: [makeShow('10:30', '2D', 2, 330), makeShow('14:10', '2D', 3, 330)],
-        3: [makeShow('13:00', '2D', 4, 330)],
-        4: [makeShow('11:20', '2D', 2, 330), makeShow('15:10', '2D', 5, 330)],
-        5: [makeShow('10:45', '2D', 3, 330)],
-      },
-    },
-  },
-  {
-    id: 'mamontenok',
-    title: 'Приключения мамонтёнка. В поисках мамы',
-    genre: 'Анимация · Приключения · Семейный',
-    duration: '1 ч 13 мин',
-    age: '6+',
-    imdb: '—',
-    kinopoisk: '—',
-    likes: 37,
-    isNew: true,
-    artwork: 'sunset',
-    poster: '/posters/mamontenok.webp', realPoster: true,
-    palette: ['#d7a86c', '#253d4a'],
-    tagline: 'Маленький герой ищет самое важное',
-    director: 'Александр Войтинский',
-    cast: ['Пелагея', 'Вадим Галыгин', 'NILETTO'],
-    synopsis: 'Мамонтёнок Пушистик просыпается после тысячелетнего сна и отправляется на поиски мамы. В пути его сопровождает птенец Тупик, мечтающий выступить на конкурсе «Африка ищет таланты».',
-    sessions: {
-      center: {
-        0: [makeShow('10:10', '2D', 3, 450), makeShow('11:40', '2D', 4, 450), makeShow('14:50', '2D', 2, 450), makeShow('16:00', '2D', 7, 450), makeShow('18:10', '3D', 1, 520), makeShow('21:40', '2D', 6, 450)],
-        1: [makeShow('13:20', '2D', 5, 450), makeShow('18:40', '2D', 3, 450)],
-        2: [makeShow('12:10', '2D', 4, 450), makeShow('17:00', '3D', 1, 520), makeShow('20:45', '2D', 5, 450)],
-        3: [makeShow('15:20', '2D', 2, 450), makeShow('19:50', '2D', 4, 450)],
-        4: [makeShow('11:50', '2D', 6, 450), makeShow('16:30', '3D', 1, 520)],
-        5: [makeShow('14:00', '2D', 3, 450)],
-      },
-      south: {
-        0: [makeShow('12:30', '2D', 4, 430), makeShow('14:05', '2D', 2, 430), makeShow('17:20', '2D', 3, 430), makeShow('18:30', '2D', 5, 430), makeShow('20:50', '3D', 1, 500)],
-        1: [makeShow('16:00', '2D', 5, 430)],
-        2: [makeShow('13:50', '2D', 2, 430), makeShow('19:30', '2D', 4, 430)],
-        3: [makeShow('11:40', '2D', 3, 430), makeShow('20:10', '3D', 1, 500)],
-        4: [makeShow('14:15', '2D', 2, 430)],
-        5: [makeShow('18:25', '2D', 4, 430)],
-      },
-    },
-  },
-  {
-    id: 'tsarevna-nesmeyana',
-    title: 'Царевна Несмеяна',
-    genre: 'Семейный · Фэнтези · Приключения',
-    duration: '1 ч 35 мин',
-    age: '6+',
-    imdb: '—',
-    kinopoisk: '—',
-    likes: 51,
-    isNew: true,
-    artwork: 'museum',
-    poster: '/posters/tsarevna-nesmeyana.webp', realPoster: true,
-    palette: ['#bd9b72', '#423554'],
-    tagline: 'Сможешь рассмешить целое царство?',
-    director: 'Василий Ровенский',
-    cast: ['Слава Копейкин', 'Анастасия Красовская', 'Рузиль Минекаев'],
-    synopsis: 'Накануне повышения Ерема вместе с младшей сестрой неожиданно попадает в Тридевятое царство. Чтобы вернуться домой, ему нужно рассмешить царевну Несмеяну — но у девушки есть своя тайна.',
-    sessions: {
-      center: {
-        0: [makeShow('19:00', '2D', 6, 450)],
-        2: [makeShow('17:35', '2D', 3, 450), makeShow('20:25', '2D', 5, 450)],
-        3: [makeShow('16:50', '2D', 6, 450)],
-        5: [makeShow('18:30', '2D', 4, 450)],
-      },
-      south: {
-        0: [makeShow('15:20', '2D', 5, 430), makeShow('20:15', '2D', 2, 430)],
-        1: [makeShow('18:00', '2D', 3, 430)],
-        2: [makeShow('16:10', '2D', 4, 430)],
-        4: [makeShow('19:15', '2D', 5, 430)],
-        5: [makeShow('13:40', '2D', 2, 430), makeShow('21:00', '2D', 4, 430)],
-      },
-    },
-  },
-];
-
-const comingSoon = [
-  {
-    id: 'ostrov-paukov', title: 'Остров пауков', genre: 'Ужасы · Комедия', age: '18+', release: 'С 22 октября',
-    artwork: 'noir', poster: '/posters/ostrov-paukov.webp', palette: ['#a35b49', '#201519'], tagline: 'Курорт, где не спрятаться',
-  },
-  {
-    id: 'tsikl-zverya', title: 'Цикл зверя', genre: 'Ужасы · Триллер', age: '18+', release: 'С 22 октября',
-    artwork: 'forest', poster: '/posters/tsikl-zverya.webp', realPoster: true, palette: ['#526b79', '#17232a'], tagline: 'Прошлое не остаётся погребённым',
-  },
-  {
-    id: 'morozko', title: 'Морозко', genre: 'Семейное · Фэнтези', age: '6+', release: 'С 22 октября',
-    artwork: 'orbit', poster: '/posters/morozko.webp', realPoster: true, palette: ['#748ca3', '#263148'], tagline: 'Новая зимняя сказка',
-  },
 ];
 
 const branches = {
@@ -331,7 +104,7 @@ function PosterArtwork({ film, className = '', onOpen, badge = true }) {
   return (
     <button
       type="button"
-      className={`poster-artwork ${film.poster ? 'has-poster' : ''} ${film.realPoster ? 'poster-clean' : ''} art-${film.artwork || 'forest'} ${className}`}
+      className={`poster-artwork ${film.poster ? 'has-poster' : ''} ${film.poster ? 'poster-clean' : ''} art-${film.artwork || 'forest'} ${className}`}
       style={style}
       onClick={onOpen}
       aria-label={`Подробнее о фильме «${film.title}»`}
@@ -884,10 +657,11 @@ function App() {
               <h2 id="detail-title">{detailFilm.title}</h2>
               <p className="detail-facts">{detailFilm.genre} <i>·</i> {detailFilm.duration}</p>
               <p className="detail-synopsis">{detailFilm.synopsis}</p>
-              <div className="detail-credits">
-                <div><span>РЕЖИССЁР</span><strong>{detailFilm.director}</strong></div>
-                <div><span>В РОЛЯХ</span><strong>{detailFilm.cast.join(', ')}</strong></div>
-              </div>
+              {detailFilm.cast?.length > 0 && (
+                <div className="detail-credits">
+                  <div><span>В РОЛЯХ</span><strong>{detailFilm.cast.join(', ')}</strong></div>
+                </div>
+              )}
               <a className="trailer-link" href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${detailFilm.title} трейлер`)}`} target="_blank" rel="noreferrer">
                 <span className="trailer-play"><Icon name="play" size={14} /></span>
                 <span><strong>Смотреть трейлер</strong><small>Откроется поиск трейлера на YouTube</small></span>

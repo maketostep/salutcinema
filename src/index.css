@@ -387,7 +387,7 @@ button:focus-visible, a:focus-visible, select:focus-visible {
 .detail-facts { margin: 0; color: #a39d98; font-size: 13px; }
 .detail-facts i { color: var(--red); font-style: normal; }
 .detail-synopsis { margin: 21px 0 18px; color: #d2ccc7; font-size: 13px; line-height: 1.75; }
-.detail-credits { display: grid; grid-template-columns: 1fr 1.25fr; gap: 15px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.detail-credits { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .detail-credits div { display: flex; flex-direction: column; gap: 4px; }
 .detail-credits span { color: #96918d; font-size: 11px; font-weight: 850; letter-spacing: .12em; }
 .detail-credits strong { color: #e3ded9; font-size: 12px; font-weight: 620; line-height: 1.5; }
